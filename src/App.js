@@ -48,7 +48,7 @@ const App = () => {
     });
   }, [q]);
 
-  const getMoreInfo = async (name) =>
+  const getArtistInfo = async (name) =>
     lastFM.artistInfo({ name }, (err, data) => {
       if (err) {
         // eslint-disable-next-line no-console
@@ -67,7 +67,7 @@ const App = () => {
     data.length > 0 && (
       <div className={classes.artistListing}>
         {data.map((info) => (
-          <Artist {...info} onInfoClick={getMoreInfo} />
+          <Artist {...info} onInfoClick={getArtistInfo} />
         ))}
       </div>
     );
