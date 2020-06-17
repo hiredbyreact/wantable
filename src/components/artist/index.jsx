@@ -6,11 +6,17 @@ const Artist = ({ name, onInfoClick }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.artist}>
+    <div
+      className={classes.artist}
+      role="button"
+      onClick={() => onInfoClick(name)}
+      onKeyDown={() => onInfoClick(name)}
+      tabIndex={0}
+    >
       <h6>{name}</h6>
       <Button
-        variant="contained"
-        color="primary"
+        variant="outlined"
+        color="default"
         component="button"
         onClick={() => onInfoClick(name)}
       >
