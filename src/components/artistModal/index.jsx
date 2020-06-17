@@ -42,7 +42,7 @@ const ArtistModal = ({
           </p>
           <p>
             <b>Tags: </b>
-            {tags}
+            {tags.join(', ')}
           </p>
           <p>
             <b># of Listeners: </b>
