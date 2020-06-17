@@ -11,7 +11,7 @@ const ArtistModal = ({
   summary,
   tags,
   // type,
-  images,
+  // images,
   handleClose,
 }) => {
   const classes = useStyles();
