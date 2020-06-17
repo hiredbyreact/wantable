@@ -30,11 +30,11 @@ const ArtistModal = ({
     >
       <Fade in>
         <div className={classes.paper}>
-          <div className={classes.imageContainer}>
+          {/* <div className={classes.imageContainer}>
             {images &&
               images.length > 0 &&
               images.map((image) => <img src={image} alt={image} />)}
-          </div>
+          </div> */}
           <h2>{name}</h2>
           <p>
             <b>Summary: </b>
