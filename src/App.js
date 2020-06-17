@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Snackbar } from '@material-ui/core';
 import logo from './logo.svg';
 import './App.css';
 import lastFM from './utils/last-fm';
@@ -8,6 +9,7 @@ import useStyles from './styles';
 const App = () => {
   const classes = useStyles();
   const [q, setQ] = useState('');
+  const [error, setError] = useState();
   const [artists, setArtists] = useState([]);
   const [artistInfo, setArtistInfo] = useState(null);
 
@@ -20,12 +22,14 @@ const App = () => {
       if (err) {
         // eslint-disable-next-line no-console
         console.warn('Error with api: ', err);
+        setError('An error has occurred getting artists.');
         return;
       }
       const {
         // meta,
         result,
       } = data;
+      setError('Successfully retrieved artist listing.');
       setArtists([...result]);
     });
   }, [q]);
@@ -35,11 +39,21 @@ const App = () => {
       if (err) {
         // eslint-disable-next-line no-console
         console.warn('Error with api: ', err);
+        setError('An error has occurred getting artist info.');
         return;
       }
+      setError('Successfully retrieved artist info.');
       setArtistInfo({ ...data });
     });
-
+  const renderArtists = () =>
+    artists &&
+    artists.length > 0 && (
+      <div className={classes.artistListing}>
+        {artists.map((info) => (
+          <Artist {...info} onInfoClick={getMoreInfo} />
+        ))}
+      </div>
+    );
   return (
     <div className="App">
       <header className="App-header">
@@ -53,15 +67,22 @@ const App = () => {
           placeholder="Search for your favorite artist..."
         />
       </header>
-      {artists && artists.length > 0 && (
-        <div className={classes.artistListing}>
-          {artists.map((info) => (
-            <Artist {...info} onInfoClick={getMoreInfo} />
-          ))}
-        </div>
-      )}
+      {renderArtists()}
       {artistInfo && (
         <ArtistModal {...artistInfo} handleClose={() => setArtistInfo(null)} />
+      )}
+
+      {error && (
+        <Snackbar
+          open
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          autoHideDuration={5000}
+          onClose={() => setError(null)}
+          message={error}
+        />
       )}
     </div>
   );
