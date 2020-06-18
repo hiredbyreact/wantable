@@ -15,6 +15,22 @@ const ArtistModal = ({
   handleClose,
 }) => {
   const classes = useStyles();
+
+  const artistInfo = [
+    { tag: 'Summary: ', content: summary },
+    { tag: 'Tags: ', content: tags.join(', ') },
+    { tag: '# of Listeners: ', content: listeners },
+  ];
+
+  const renderInfoItem = ({ tag, content }) => (
+    <p>
+      <b>{tag}</b>
+      {content}
+    </p>
+  );
+
+  const renderArtistInfo = () => artistInfo.map(renderInfoItem);
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -36,18 +52,7 @@ const ArtistModal = ({
               images.map((image) => <img src={image} alt={image} />)}
           </div> */}
           <h2>{name}</h2>
-          <p>
-            <b>Summary: </b>
-            {summary}
-          </p>
-          <p>
-            <b>Tags: </b>
-            {tags.join(', ')}
-          </p>
-          <p>
-            <b># of Listeners: </b>
-            {listeners}
-          </p>
+          {renderArtistInfo()}
           <Button variant="contained" color="primary" onClick={handleClose}>
             Close Modal
           </Button>
